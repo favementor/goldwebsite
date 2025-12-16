@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Manipulation Assignment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .assignment-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        h2 {
+            color: #3498db;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .instructions {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .instructions h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .demo-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .profile-card {
+            flex: 1;
+            min-width: 300px;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border-top: 5px solid #3498db;
+        }
+        
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #ecf0f1;
+            margin: 0 auto 20px;
+            display: block;
+        }
+        
+        .profile-name {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .profile-title {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .profile-bio {
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        .controls {
+            flex: 1;
+            min-width: 300px;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .control-group {
+            margin-bottom: 25px;
+        }
+        
+        .control-group h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-danger {
+            background-color: #e74c3c;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-success {
+            background-color: #2ecc71;
+        }
+        
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+        
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid #eee;
+        }
+        
+        .color-option.active {
+            border: 3px solid #333;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>DOM Manipulation Assignment</h1>
+            <p class="subtitle">Interactive Profile Card Customization</p>
+        </header>
+        
+        <section class="assignment-section">
+            <h2>Instructions</h2>
+            <div class="instructions">
+                <h3>Your Task:</h3>
+                <p>Complete the JavaScript code to make the profile card interactive. All tasks involve DOM manipulation techniques.</p>
+                
+                <h3>Steps to Complete:</h3>
+                <ul>
+                    <li><span class="highlight">Task 1:</span> Change the profile name when the "Change Name" button is clicked</li>
+                    <li><span class="highlight">Task 2:</span> Toggle the visibility of the profile bio when the "Toggle Bio" button is clicked</li>
+                    <li><span class="highlight">Task 3:</span> Update the profile stats when the "Update Stats" button is clicked</li>
+                    <li><span class="highlight">Task 4:</span> Change the theme color when a color option is selected</li>
+                    <li><span class="highlight">Task 5:</span> Add a new skill to the skills list when the "Add Skill" button is clicked</li>
+                    <li><span class="highlight">Task 6:</span> Reset the profile card to its original state</li>
+                </ul>
+            </div>
+            
+            <div class="demo-area">
+                <div class="profile-card" id="profileCard">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Profile" class="profile-pic" id="profilePic">
+                    <h2 class="profile-name" id="profileName">Alex Johnson</h2>
+                    <p class="profile-title" id="profileTitle">Frontend Developer</p>
+                    <p class="profile-bio" id="profileBio">Passionate about creating beautiful and functional web experiences. Loves JavaScript, CSS, and exploring new web technologies. Currently focused on learning React and Node.js.</p>
+                    
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <div class="stat-value" id="postsCount">42</div>
+                            <div class="stat-label">Posts</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="followersCount">128</div>
+                            <div class="stat-label">Followers</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="followingCount">56</div>
+                            <div class="stat-label">Following</div>
+                        </div>
+                    </div>
+                    
+                    <div class="skills-section">
+                        <h3>Skills</h3>
+                        <ul id="skillsList">
+                            <li>HTML5</li>
+                            <li>CSS3</li>
+                            <li>JavaScript</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <h3>1. Change Profile Name</h3>
+                        <button class="btn" id="changeNameBtn">Change Name</button>
+                        <p>Click to change the name to "Taylor Smith"</p>
+                    </div>
+                    
+                    <div class="control-group">
+                        <h3>2. Toggle Bio Visibility</h3>
+                        <button class="btn" id="toggleBioBtn">Toggle Bio</button>
+                        <p>Click to show/hide the profile bio</p>
+                    </div>
+                    
+                    <div class="control-group">
+                        <h3>3. Update Profile Stats</h3>
+                        <button class="btn" id="updateStatsBtn">Update Stats</button>
+                        <p>Click to increase all stats by 10</p>
+                    </div>
+                    
+                    <div class="control-group">
+                        <h3>4. Change Theme Color</h3>
+                        <div class="color-picker">
+                            <div class="color-option active" style="background-color: #3498db;" data-color="#3498db"></div>
+                            <div class="color-option" style="background-color: #2ecc71;" data-color="#2ecc71"></div>
+                            <div class="color-option" style="background-color: #e74c3c;" data-color="#e74c3c"></div>
+                            <div class="color-option" style="background-color: #9b59b6;" data-color="#9b59b6"></div>
+                            <div class="color-option" style="background-color: #f39c12;" data-color="#f39c12"></div>
+                        </div>
+                        <p>Click a color to change the theme</p>
+                    </div>
+                    
+                    <div class="control-group">
+                        <h3>5. Add New Skill</h3>
+                        <button class="btn" id="addSkillBtn">Add Skill</button>
+                        <p>Click to add "React.js" to the skills list</p>
+                    </div>
+                    
+                    <div class="control-group">
+                        <h3>6. Reset Profile Card</h3>
+                        <button class="btn btn-danger" id="resetBtn">Reset All</button>
+                        <p>Click to reset everything to original state</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="footer">
+            <p>Complete the JavaScript tasks in the &lt;script&gt; section below</p>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // DOM MANIPULATION ASSIGNMENT
+        // Complete the tasks below by writing JavaScript code
+        // ============================================
+        
+        // Task 1: Change the profile name when the button is clicked
+        // Get the button element with id "changeNameBtn"
+        // Add a click event listener to it
+        // When clicked, change the text content of the element with id "profileName" to "Taylor Smith"
+        
+        // YOUR CODE FOR TASK 1 HERE
+        
+        
+        // Task 2: Toggle the visibility of the profile bio
+        // Get the button element with id "toggleBioBtn"
+        // Add a click event listener to it
+        // When clicked, toggle the visibility of the element with id "profileBio"
+        // Hint: You can toggle the 'hidden' class on the bio element
+        
+        // YOUR CODE FOR TASK 2 HERE
+        
+        
+        // Task 3: Update the profile stats when the button is clicked
+        // Get the button element with id "updateStatsBtn"
+        // Add a click event listener to it
+        // When clicked, increase each stat value by 10
+        // The stats elements have ids: "postsCount", "followersCount", "followingCount"
+        // Hint: You'll need to get the current value, convert it to a number, add 10, then update the element
+        
+        // YOUR CODE FOR TASK 3 HERE
+        
+        
+        // Task 4: Change the theme color when a color option is clicked
+        // Get all elements with class "color-option"
+        // Add a click event listener to each one
+        // When a color option is clicked:
+        //   1. Remove the "active" class from all color options
+        //   2. Add the "active" class to the clicked color option
+        //   3. Change the border-top color of the profile card (id "profileCard") to the selected color
+        //   4. Change the color of all stat values (class "stat-value") to the selected color
+        // Hint: The color value is stored in the data-color attribute of each color option
+        
+        // YOUR CODE FOR TASK 4 HERE
+        
+        
+        // Task 5: Add a new skill to the skills list
+        // Get the button element with id "addSkillBtn"
+        // Add a click event listener to it
+        // When clicked, add a new list item with text "React.js" to the skills list (id "skillsList")
+        // Hint: Create a new li element, set its text content, then append it to the skills list
+        
+        // YOUR CODE FOR TASK 5 HERE
+        
+        
+        // Task 6: Reset the profile card to its original state
+        // Get the button element with id "resetBtn"
+        // Add a click event listener to it
+        // When clicked, reset everything to the original state:
+        //   1. Reset the name to "Alex Johnson"
+        //   2. Make sure the bio is visible (remove 'hidden' class)
+        //   3. Reset stats to: Posts = 42, Followers = 128, Following = 56
+        //   4. Reset theme to default color (#3498db) and make the first color option active
+        //   5. Reset skills list to only: HTML5, CSS3, JavaScript (remove any added skills)
+        
+        // YOUR CODE FOR TASK 6 HERE
+        
+    </script>
+</body>
+</html>
